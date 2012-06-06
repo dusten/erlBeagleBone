@@ -11,6 +11,20 @@ GpioExport = "/sys/class/gpio/export",
 GpioDebug  = "/sys/kernel/debug/omap_mux",
 GpioGpio   = "/sys/class/gpio/gpio",
 
+hex(N) when N < 10 -> $0+N;
+hex(N) when N >= 10, N < 16 -> $a+(N-10).
+
+to_hex(N) when N < 16 -> [hex(N rem 16)];
+to_hex(N) when N >= 16, N < 256 -> [hex(N div 16), hex(N rem 16)].
+
+hex_to_bin(L) ->
+  binary:encode_unsigned(erlang:list_to_integer(L,16)).
+
+bin_to_hex(L) ->
+  B = binary:encode_unsigned(erlang:list_to_integer(L,2)),
+  string:join([to_hex(X) || X <- erlang:bitstring_to_list(B)],"").
+
+
 -record(state, {pid,		% Process ID
 		pin_fd,		% File Discripter for gpio pin
                 pin_mode,	% Mode to set Pin to
