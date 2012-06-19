@@ -11,20 +11,6 @@ GpioExport = "/sys/class/gpio/export",
 GpioDebug  = "/sys/kernel/debug/omap_mux",
 GpioGpio   = "/sys/class/gpio/gpio",
 
-hex(N) when N < 10 -> $0+N;
-hex(N) when N >= 10, N < 16 -> $a+(N-10).
-
-to_hex(N) when N < 16 -> [hex(N rem 16)];
-to_hex(N) when N >= 16, N < 256 -> [hex(N div 16), hex(N rem 16)].
-
-hex_to_bin(L) ->
-  binary:encode_unsigned(erlang:list_to_integer(L,16)).
-
-bin_to_hex(L) ->
-  B = binary:encode_unsigned(erlang:list_to_integer(L,2)),
-  string:join([to_hex(X) || X <- erlang:bitstring_to_list(B)],"").
-
-
 -record(state, {pid,		% Process ID
 		pin_fd,		% File Discripter for gpio pin
                 pin_mode,	% Mode to set Pin to
@@ -35,17 +21,28 @@ bin_to_hex(L) ->
 		pin_slew,	% slew rate - [fast|slow] 0=Fast 1=Slow
 		pin_updown,	% Pin is a Pullup or Pulldown - [up|down] 0=pulldown 1=pullup
 		pin_updown_e,	% Pin Pullup/Pulldown is enabled or disabled - [enabled|disabled] 0=enabled 1=disabled
-                orig_mode	% Mode of Pin before Changing
+                orig_state	% Mode of Pin before Changing
+		%Ext_Mode = [pin_slew,pin_updown,pin_updown_e]
 }).
 
 start(Pin, Direction) ->
-  State = gpio:init(Pin, 7, Direction),
+  State = gpio:init(Pin, 7, Direction, []),
   io:format(" Current State: ~p~n",[State]),
   State#state.pid = spawn(?MODULE, loop, State),
   State.
 
 start(Pin, Mode, Direction) ->
-  State = gpio:init(Pin, Mode, Direction),
+  State = gpio:init(Pin, Mode, Direction, []),
+  io:format(" Current State: ~p~n",[State]),
+  State#state.pid = spawn(?MODULE, loop, State),
+  State.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Ext_Mode = [pin_slew,pin_updown,pin_updown_e]  %%
+%%     Ext_Mode is a list of 1|0 for each value    %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+start(Pin, Mode, Direction, Ext_Mode) ->
+  State = gpio:init(Pin, Mode, Direction, Ext_Mode),
   io:format(" Current State: ~p~n",[State]),
   State#state.pid = spawn(?MODULE, loop, State),
   State.
@@ -53,7 +50,7 @@ start(Pin, Mode, Direction) ->
 stop(State) ->
   State#state.pid ! stop.
 
-init(Header, Mode, Direction, ) ->
+init(Header, Mode, Direction, Ext_Mode) ->
   {Results, State} = case Header of
     {p8, 1}  ->  %% GND
       {error, {"Reserved PIN", "This PIN is used for GND"}};
@@ -717,6 +714,12 @@ init(Header, Mode, Direction, ) ->
       {error, {"Reserved PIN", "This PIN is used for GND"}}
     end,
 
+  if length(Ext_Mode) >= 1, length(Ext_Mode) <= 3 ->
+      
+
+    true -> State#state.orig_state = save_current_state(GpioDebug ++ State#.state.pin_gpio)
+  end,
+
   {ok, FdExport} = file:open(GpioExport, [write]),              
   file:write(FdExport, integer_to_list(State#state.pin_gpio)),
   file:close(FdExport),
@@ -736,6 +739,80 @@ release(State) ->
   {ok, FdUnexport} = file:open("/sys/class/gpio/unexport", [write]),
   file:write(FdUnexport, integer_to_list(State#state.pin_gpio)),
   file:close(FdUnexport).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 						   %%
+%%          Internal Function Start Here           %%
+%% 						   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+hex(N) when N < 10 -> $0+N;
+hex(N) when N >= 10, N < 16 -> $a+(N-10).
+
+to_hex(N) when N < 16 -> [hex(N rem 16)];
+to_hex(N) when N >= 16, N < 256 -> [hex(N div 16), hex(N rem 16)].
+
+hex_to_bin(L) ->
+  binary:encode_unsigned(erlang:list_to_integer(L,16)).
+
+bin_to_hex(L) ->
+  B = binary:encode_unsigned(erlang:list_to_integer(L,2)),
+  string:join([to_hex(X) || X <- erlang:bitstring_to_list(B)],"").
+
+
+read_gpio(File) ->
+  Results = case file:open(File, [read, binary, raw]) of
+    {ok, Fd} ->
+      Result = case file:pread(Fd, 0, 512) of
+        eof ->
+          {error, "Opended the file but reached EOF unexpetedly."};
+%%          io:format(" Opended the file but reached EOF unexpetedly.~n"); %% Needs Change for Debugging
+        {error, Res} ->
+          Tmp = io_lib:format(" Error file:pread(~p) : ~p~n",[File,Res]),
+          {error, Tmp};
+        {ok, Res} ->
+          {ok, Res}
+      end,
+      file:close(Fd),
+      Result;
+    {error, Res} ->
+      Tmp = io_lib:format(" Error file:open(~p) : ~p~n",[File,Res]),
+      {error, Tmp}
+  end,
+  Results.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%      Can use re:split in place of Token         %%
+%% re:split(Raw_File,"[()]",[{return,list},trim]). %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+save_current_state(File) ->
+  {ok,Raw_File} = read_gpio(File),
+  [_Name,Reg,_Other] = string:tokens(binary:bin_to_list(Raw_File),"()"),
+  [_Other_Reg,Cur_State] = string:tokens(Reg,erlang:atom_to_list(' = ')),
+  [_,Cur] = string:tokens(Cur_State,"x"),          
+  S = erlang:bit_size(erlang:list_to_binary(Cur)),
+  <<Current_State:S/integer-little>>=erlang:list_to_binary(Cur). 
+
+
+ext_mode([Pin_Slew]) ->
+  if Pin_Slew == 0 ; Pin_Slew == 1 -> string:join([erlang:integer_to_list(Pin_Slew),"0","0"],"");    
+    true -> {error,"Invalid Ext_Mode Value Pin_Slew"}
+  end;
+ext_mode([Pin_Slew,Pin_UpDown]) ->
+  if Pin_Slew == 0 ; Pin_Slew == 1,
+     Pin_UpDown == 0 ; Pin_UpDown == 1 -> string:join([erlang:integer_to_list(Pin_Slew),erlang:integer_to_list(Pin_UpDown),"0"],"");
+    true -> {error,"Invalid Ext_Mode Value Pin_Slew or Pin_UpDown"}
+  end;
+ext_mode([Pin_Slew,Pin_UpDown,Pin_UpDown_E]) ->
+  if Pin_Slew == 0 ; Pin_Slew == 1,
+     Pin_UpDown == 0 ; Pin_UpDown == 1,
+     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_Slew),erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_UpDown_E)],"");  
+    true -> {error,"Invalid Ext_Mode Value Pin_Slew or Pin_UpDown or Pin_UpDown_E"}
+  end.
 
 
 %%-------------------------------------------------------------------------
