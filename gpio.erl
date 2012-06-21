@@ -10,6 +10,7 @@
 GpioExport = "/sys/class/gpio/export",
 GpioDebug  = "/sys/kernel/debug/omap_mux",
 GpioGpio   = "/sys/class/gpio/gpio",
+Ain	   = "/sys/devices/platform/omap/tsc",
 
 -record(state, {pid,		% Process ID
 		pin_fd,		% File Discripter for gpio pin
@@ -22,7 +23,6 @@ GpioGpio   = "/sys/class/gpio/gpio",
 		pin_updown,	% Pin is a Pullup or Pulldown - [up|down] 0=pulldown 1=pullup
 		pin_updown_e,	% Pin Pullup/Pulldown is enabled or disabled - [enabled|disabled] 0=enabled 1=disabled
                 orig_state	% Mode of Pin before Changing
-		%Ext_Mode = [pin_slew,pin_updown,pin_updown_e]
 }).
 
 start(Pin, Direction) ->
