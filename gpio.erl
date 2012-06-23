@@ -804,12 +804,12 @@ save_current_state(File) ->
 ext_mode([Pin_UpDown_E]) ->
   if Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown_E),"4","4"],"");  
     true -> {error,"Invalid Ext_Mode Value Pin_UpDown_E"}
-  end.
+  end;
 ext_mode([Pin_UpDown_E,Pin_UpDown]) ->
   if Pin_UpDown == 0 ; Pin_UpDown == 1,
      Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown_E),erlang:integer_to_list(Pin_UpDown),"4"],"");  
     true -> {error,"Invalid Ext_Mode Value Pin_UpDown_E or Pin_UpDown"}
-  end.
+  end;
 ext_mode([Pin_UpDown_E,Pin_UpDown,Pin_Slew]) ->
   if Pin_Slew == 0 ; Pin_Slew == 1,
      Pin_UpDown == 0 ; Pin_UpDown == 1,
