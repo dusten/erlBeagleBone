@@ -139,7 +139,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "gpmc_ad9", pin_proc = "T10"}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 23, pin_mode0 = "gpmc_ad9", pin_proc = "T10"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-13"}}
       end;
     {p8, 14} ->  %% GPIO0_26   - T11 - MODE[0|1|2|3|4|7] 	- gpmc_ad10
@@ -149,7 +149,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 26, pin_mode0 = "gpmc_ad10", pin_proc = "T11"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-14"}}
       end;
     {p8, 15} ->  %% GPIO1_15   - U13 - MODE[0|1|2|3|4|7] 	- gpmc_ad15
@@ -159,7 +159,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 47, pin_mode0 = "gpmc_ad15", pin_proc = "U13"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-15"}}
       end;
     {p8, 16} ->  %% GPIO1_14   - V13 - MODE[0|1|2|3|4|7] 	- gpmc_ad14
@@ -169,7 +169,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 46, pin_mode0 = "gpmc_ad14", pin_proc = "V13"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-16"}}
       end;
     {p8, 17} ->  %% GPIO0_27   - U12 - MODE[0|1|2|3|4|7] 	- gpmc_ad11
@@ -179,7 +179,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 27, pin_mode0 = "gpmc_ad11", pin_proc = "U12"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-17"}}
       end;
     {p8, 18} ->  %% GPIO2_1    - V12 - MODE[0|1|2|3|6|7] 	- gpmc_clk
@@ -189,7 +189,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 65, pin_mode0 = "gpmc_clk", pin_proc = "V12"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-18"}}
       end;
     {p8, 19} ->  %% EHRPWM2A   - U10 - MODE[0|1|2|3|4|7] 	- gpmc_ad8
@@ -199,7 +199,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 22, pin_mode0 = "gpmc_ad8", pin_proc = "U10"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-19"}}
       end;
     {p8, 20} ->  %% GPIO1_31   - V9  - MODE[0|1|2|7] 		- gpmc_csn2
@@ -207,7 +207,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	0 ->;
 %	1 ->;
 %	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 63 , pin_mode0 = "gpmc_csn2", pin_proc = "V9"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
       end;
     {p8, 21} ->  %% GPIO1_30   - U9  - MODE[0|1|2|7] 		- gpmc_csn1
@@ -215,201 +215,72 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	0 ->;
 %	1 ->;
 %	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 62, pin_mode0 = "gpmc_csn1", pin_proc = "U9"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-21"}}
       end;
     {p8, 22} ->  %% GPIO1_5    - V8  - MODE[0|2|7] 		- gpmc_ad5
       case Mode of
 %	0 ->;
 %	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 37, pin_mode0 = "gpmc_ad5", pin_proc = "V8"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-22"}}
       end;
     {p8, 23} ->  %% GPIO1_4    - U8  - MODE[0|1|7] 		- gpmc_ad4
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 36, pin_mode0 = "gpmc_ad4", pin_proc = "U8"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-23"}}
       end;
     {p8, 24} ->  %% GPIO1_1    - V7  - MODE[0|1|7] 		- gpmc_ad1
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 33, pin_mode0 = "gpmc_ad1", pin_proc = "V7"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-24"}}
       end;
     {p8, 25} ->  %% GPIO1_0    - U7  - MODE[0|1|7] 		- gpmc_ad0
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 32, pin_mode0 = "gpmc_ad0", pin_proc = "U7"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-25"}}
       end;
     {p8, 26} ->  %% GPIO1_29   - V6  - MODE[0|7] 		- gpmc_csn0
       case Mode of
 %	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 61, pin_mode0 = "gpmc_csn0", pin_proc = "V6"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-26"}}
       end;
     {p8, 27} ->  %% GPIO1_22   - U5  - MODE[0|1|7] 		- lcd_vsync
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 86, pin_mode0 = "lcd_vsync", pin_proc = "U5"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-27"}}
       end;
     {p8, 28} ->  %% GPIO1_24   - V5  - MODE[0|1|7] 		- lcd_pclk
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 88, pin_mode0 = "lcd_pclk", pin_proc = "V5"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-28"}}
       end;
     {p8, 29} ->  %% GPIO1_23   - R5  - MODE[0|1|7] 		- lcd_hsync
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 87, pin_mode0 = "lcd_hsync", pin_proc = "R5"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-29"}}
       end;
     {p8, 30} ->  %% GPIO1_25   - R6  - MODE[0|1|7] 		- lcd_ac_bias_en
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 89, pin_mode0 = "lcd_ac_bias_en", pin_proc = "R6"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-30"}}
       end;
     {p8, 31} ->  %% UART5_CTSN - V4  - MODE[0|1|2|3|4|6|7] 	- lcd_data14
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 32} ->  %% UART5_RTSN - T5  - MODE[0|1|2|3|4|6|7] 	- lcd_data15
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 33} ->  %% UART4_RTSN - V3  - MODE[0|1|2|3|4|6|7] 	- lcd_data13
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 34} ->  %% UART3_RTSN - U4  - MODE[0|1|2|3|4|6|7] 	- lcd_data11
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 35} ->  %% UART4_CTSN - V2  - MODE[0|1|2|3|4|6|7] 	- lcd_data12
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 36} ->  %% UART3_CTSN - U3  - MODE[0|1|2|3|6|7] 	- lcd_data10
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 37} ->  %% UART5_TXD  - U1  - MODE[0|1|2|3|4|6|7] 	- lcd_data8
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 38} ->  %% UART5_RXD  - U2  - MODE[0|1|2|3|4|6|7] 	- lcd_data9
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 39} ->  %% GPIO2_12   - T3  - MODE[0|1|3|7] 		- lcd_data6
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 40} ->  %% GPIO2_13   - T4  - MODE[0|1|3|4|7] 		- lcd_data7
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 41} ->  %% GPIO2_10   - T1  - MODE[0|1|3|7] 		- lcd_data4
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 42} ->  %% GPIO2_11   - T2  - MODE[0|1|3|7] 		- lcd_data5
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 43} ->  %% GPIO2_8    - R3  - MODE[0|1|3|7] 		- lcd_data2
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 44} ->  %% GPIO2_9    - R4  - MODE[0|1|3|7] 		- lcd_data3
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 45} ->  %% GPIO2_6    - R1  - MODE[0|1|3|7] 		- lcd_data0
-      case Mode of
-%	0 ->;
-%	1 ->;
-%	2 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
-      end;
-    {p8, 46} ->  %% GPIO2_7    - R2  - MODE[0|1|3|7] 		- lcd_data1
       case Mode of
 %	0 ->;
 %	1 ->;
@@ -417,8 +288,149 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 10, pin_mode0 = "lcd_data14", pin_proc = "V4"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-31"}}
+      end;
+    {p8, 32} ->  %% UART5_RTSN - T5  - MODE[0|1|2|3|4|6|7] 	- lcd_data15
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	4 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 11, pin_mode0 = "lcd_data15", pin_proc = "T5"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-32"}}
+      end;
+    {p8, 33} ->  %% UART4_RTSN - V3  - MODE[0|1|2|3|4|6|7] 	- lcd_data13
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	4 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 9, pin_mode0 = "lcd_data13", pin_proc = "V3"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-33"}}
+      end;
+    {p8, 34} ->  %% UART3_RTSN - U4  - MODE[0|1|2|3|4|6|7] 	- lcd_data11
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	4 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 81, pin_mode0 = "lcd_data11", pin_proc = "U4"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-34"}}
+      end;
+    {p8, 35} ->  %% UART4_CTSN - V2  - MODE[0|1|2|3|4|6|7] 	- lcd_data12
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	4 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 8, pin_mode0 = "lcd_data12", pin_proc = "V2"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-35"}}
+      end;
+    {p8, 36} ->  %% UART3_CTSN - U3  - MODE[0|1|2|3|6|7] 	- lcd_data10
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 80, pin_mode0 = "lcd_data10", pin_proc = "U3"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-36"}}
+      end;
+    {p8, 37} ->  %% UART5_TXD  - U1  - MODE[0|1|2|3|4|6|7] 	- lcd_data8
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	4 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 78, pin_mode0 = "lcd_data8", pin_proc = "U1"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-37"}}
+      end;
+    {p8, 38} ->  %% UART5_RXD  - U2  - MODE[0|1|2|3|4|6|7] 	- lcd_data9
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	2 ->;
+%	3 ->;
+%	4 ->;
+%	6 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 79, pin_mode0 = "lcd_data9", pin_proc = "U2"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-38"}}
+      end;
+    {p8, 39} ->  %% GPIO2_12   - T3  - MODE[0|1|3|7] 		- lcd_data6
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 76, pin_mode0 = "lcd_data6", pin_proc = "T3"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-39"}}
+      end;
+    {p8, 40} ->  %% GPIO2_13   - T4  - MODE[0|1|3|4|7] 		- lcd_data7
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+%	4 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 77, pin_mode0 = "lcd_data7", pin_proc = "T4"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-40"}}
+      end;
+    {p8, 41} ->  %% GPIO2_10   - T1  - MODE[0|1|3|7] 		- lcd_data4
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 74, pin_mode0 = "lcd_data4", pin_proc = "T1"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-41"}}
+      end;
+    {p8, 42} ->  %% GPIO2_11   - T2  - MODE[0|1|3|7] 		- lcd_data5
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 75, pin_mode0 = "lcd_data5", pin_proc = "T2"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-42"}}
+      end;
+    {p8, 43} ->  %% GPIO2_8    - R3  - MODE[0|1|3|7] 		- lcd_data2
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 72, pin_mode0 = "lcd_data2", pin_proc = "R3"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-43"}}
+      end;
+    {p8, 44} ->  %% GPIO2_9    - R4  - MODE[0|1|3|7] 		- lcd_data3
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 73, pin_mode0 = "lcd_data3", pin_proc = "R4"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-44"}}
+      end;
+    {p8, 45} ->  %% GPIO2_6    - R1  - MODE[0|1|3|7] 		- lcd_data0
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 70, pin_mode0 = "lcd_data0", pin_proc = "R1"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-45"}}
+      end;
+    {p8, 46} ->  %% GPIO2_7    - R2  - MODE[0|1|3|7] 		- lcd_data1
+      case Mode of
+%	0 ->;
+%	1 ->;
+%	3 ->;
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 71, pin_mode0 = "lcd_data1", pin_proc = "R2"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p8-46"}}
       end;
     {p9, 1}  ->  %% GND
       {error, {"Reserved PIN", "This PIN is used for GND"}};
@@ -448,8 +460,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 30, pin_mode0 = "gpm_wait0", pin_proc = "T17"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-11"}}
       end;
     {p9, 12} ->  %% GPIO1_28   - U18 - MODE[0|1|2|3|4|6|7]	- gpmc_ben1	
       case Mode of
@@ -459,8 +471,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 60, pin_mode0 = "gpmc_ben1", pin_proc = "U18"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-12"}}
       end;
     {p9, 13} ->  %% UART4_TXD  - U17 - MODE[0|1|2|3|4|6|7]	- gpmc_wpn
       case Mode of
@@ -470,8 +482,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 31, pin_mode0 = "gpmc_wpn", pin_proc = "U17"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-13"}}
       end;
     {p9, 14} ->  %% EHRPWM1A   - U14 - MODE[0|1|2|3|4|6|7]	- gpmc_a2
       case Mode of
@@ -481,8 +493,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 50, pin_mode0 = "gpmc_a2", pin_proc = "U14"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-14"}}
       end;
     {p9, 15} ->  %% GPIO1_16   - R13 - MODE[0|1|2|3|4|6|7]	- gpmc_a0
       case Mode of
@@ -492,8 +504,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 48, pin_mode0 = "gpmc_a0", pin_proc = "R13"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-15"}}
       end;
     {p9, 16} ->  %% EHRPWM1B   - T14 - MODE[0|1|2|3|4|6|7]	- gpmc_a3
       case Mode of
@@ -503,8 +515,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 51, pin_mode0 = "gpmc_a3", pin_proc = "T14"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-16"}}
       end;
     {p9, 17} ->  %% I2C1_SCL   - A16 - MODE[0|1|2|3|7]		- spi0_cs0
       case Mode of
@@ -512,10 +524,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	1 ->;
 %	2 ->;
 %	3 ->;
-%	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 5, pin_mode0 = "spi0_cs0", pin_proc = "A16"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-17"}}
       end;
     {p9, 18} ->  %% I2C1_SDA   - B16 - MODE[0|1|2|3|7]		- spi0_d1
       case Mode of
@@ -523,10 +533,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	1 ->;
 %	2 ->;
 %	3 ->;
-%	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 4, pin_mode0 = "spi0_d1", pin_proc = "B16"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-18"}}
       end;
     {p9, 19} ->  %% I2C2_SCL   - D17 - MODE[0|1|2|3|4|7]	- uart1_rtsn
       case Mode of
@@ -535,9 +543,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 13, pin_mode0 = "uart1_rtsn", pin_proc = "D17"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-19"}}
       end;
     {p9, 20} ->  %% I2C2_SDA   - D18 - MODE[0|1|2|3|4|7]	- uart1_ctsn
       case Mode of
@@ -546,9 +553,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 12, pin_mode0 = "uart1_ctsn", pin_proc = "D18"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-20"}}
       end;
     {p9, 21} ->  %% UART2_TXD  - B17 - MODE[0|1|2|3|6|7]	- spi0_d0
       case Mode of
@@ -556,10 +562,9 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	1 ->;
 %	2 ->;
 %	3 ->;
-%	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 3, pin_mode0 = "spi0_d0", pin_proc = "B17"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-21"}}
       end;
     {p9, 22} ->  %% UART2_RXD  - A17 - MODE[0|1|2|3|6|7]	- spi0_sclk
       case Mode of
@@ -569,8 +574,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 2, pin_mode0 = "spi0_sclk", pin_proc = "A17"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-22"}}
       end;
     {p9, 23} ->  %% GPIO1_17   - V14 - MODE[0|1|2|3|4|6|7]	- gpmc_a1
       case Mode of
@@ -580,8 +585,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 49, pin_mode0 = "gpmc_a1", pin_proc = "V14"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-23"}}
       end;
     {p9, 24} ->  %% UART1_TXD  - D15 - MODE[0|1|2|3|7]		- uart1_txd
       case Mode of
@@ -589,10 +594,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	1 ->;
 %	2 ->;
 %	3 ->;
-%	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 15, pin_mode0 = "uart1_txd", pin_proc = "D15"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-24"}}
       end;
     {p9, 25} ->  %% GPIO3_21   - A14 - MODE[0|1|2|3|4|7]	- mcasp0_ahclkx
       case Mode of
@@ -601,9 +604,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 117, pin_mode0 = "mcasp0_ahclkx", pin_proc = "A14"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-25"}}
       end;
     {p9, 26} ->  %% UART1_RXD  - D16 - MODE[0|1|2|3|7]		- uart1_rxd
       case Mode of
@@ -611,10 +613,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	1 ->;
 %	2 ->;
 %	3 ->;
-%	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 14, pin_mode0 = "uart1_rxd", pin_proc = "D16"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-26"}}
       end;
     {p9, 27} ->  %% GPIO3_19   - C13 - MODE[0|1|2|3|4|6|7]	- mcasp0_fsr
       case Mode of
@@ -624,8 +624,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 115, pin_mode0 = "mcasp0_fsr", pin_proc = "C13"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-27"}}
       end;
     {p9, 28} ->  %% SPI1_CS0   - C12 - MODE[0|1|2|3|4|7]	- mcasp0_ahclkr
       case Mode of
@@ -634,9 +634,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 113, pin_mode0 = "mcasp0_ahclkr", pin_proc = "C12"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-28"}}
       end;
     {p9, 29} ->  %% SPI1_D0    - B13 - MODE[0|1|3|4|7]		- mcasp0_fsx
       case Mode of
@@ -645,9 +644,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 111, pin_mode0 = "mcasp0_fsx", pin_proc = "B13"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-29"}}
       end;
     {p9, 30} ->  %% SPI1_D1    - D12 - MODE[0|1|3|4|7]		- mcasp0_axr0
       case Mode of
@@ -656,20 +654,17 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 112, pin_mode0 = "mcasp0_axr0", pin_proc = "D12"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-30"}}
       end;
     {p9, 31} ->  %% SPI1_SCLK  - A13 - MODE[0|1|3|4|7]		- mcasp0_aclkx
       case Mode of
 %	0 ->;
 %	1 ->;
-%	2 ->;
 %	3 ->;
 %	4 ->;
-%	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 110, pin_mode0 = "mcasp0_aclkx", pin_proc = "A13"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-31"}}
       end;
     {p9, 32} ->  %% VDD_ADC
       {error, {"Reserved PIN", "This PIN is used for VDD_ADC"}};
@@ -690,8 +685,8 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
-	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 20, pin_mode0 = "xdma_event_intr1", pin_proc = "D14"}};
+	_ -> {error, {"Mode Error", "Invalide Mode for p9-41"}}
       end;
     {p9, 42} ->  %% GPIO0_7    - C18 - MODE[0|1|2|3|4|6|7]	- ecap0_in_pwm0_out
       case Mode of
@@ -701,7 +696,7 @@ init(Header, Mode, Direction, Ext_Mode) ->
 %	3 ->;
 %	4 ->;
 %	6 ->;
-	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = , pin_mode0 = "", pin_proc = ""}};
+	7 -> {ok, #state{pin_mode = Mode, pin_direction = Direction, pin_gpio = 7, pin_mode0 = "ecap0_in_pwm0_out", pin_proc = "C18"}};
 	_ -> {error, {"Mode Error", "Invalide Mode for p8-20"}}
       end;
     {p9, 43} ->  %% GND
