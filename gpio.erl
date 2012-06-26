@@ -37,10 +37,11 @@ start(Pin, Mode, Direction) ->
   State#state.pid = spawn(?MODULE, loop, State),
   State.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Ext_Mode = [pin_updown_e,pin_updown,pin_slew]  %%
-%%     Ext_Mode is a list of 1|0 for each value    %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Ext_Mode = [pin_updown,pin_updown_e,pin_slew]  %%
+%%   Ext_Mode is a list that can be the following   %%
+%% ["[up|down]","[enabled|disabled]","[fast|slow]"] %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 start(Pin, Mode, Direction, Ext_Mode) ->
   State = gpio:init(Pin, Mode, Direction, Ext_Mode),
   io:format(" Current State: ~p~n",[State]),
@@ -669,14 +670,21 @@ init(Header, Mode, Direction, Ext_Mode) ->
     {p9, 32} ->  %% VDD_ADC
       {error, {"Reserved PIN", "This PIN is used for VDD_ADC"}};
     {p9, 33} ->  %% AIN4       - C8  - MODE[]			- ain4
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain5" pin_proc = "C8"}};
     {p9, 34} ->  %% GNDA_ADC
       {error, {"Reserved PIN", "This PIN is used for GNDA_ADC"}};
     {p9, 35} ->  %% AIN6       - A5  - MODE[]			- ain6
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain7" pin_proc = "A5"}};
     {p9, 36} ->  %% AIN5       - A6  - MODE[]			- ain5
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain6" pin_proc = "A6"}};
     {p9, 37} ->  %% AIN2       - B7  - MODE[]			- ain2
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain3" pin_proc = "B7"}};
     {p9, 38} ->  %% AIN3       - A7  - MODE[]			- ain3
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain4" pin_proc = "A7"}};
     {p9, 39} ->  %% AIN0       - B6  - MODE[]			- ain0
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain1" pin_proc = "B6"}};
     {p9, 40} ->  %% AIN1       - C7  - MODE[]			- ain1
+      {ok, #state{pin_mode = "0", pin_direction = "IN", pin_mode0 = "ain2" pin_proc = "C7"}};
     {p9, 41} ->  %% CLKOUT2    - D14 - MODE[0|2|3|4|6|7]	- xdma_event_intr1
       case Mode of
 %	0 ->;
@@ -712,11 +720,20 @@ init(Header, Mode, Direction, Ext_Mode) ->
   State#state.orig_state = save_current_state(GpioDebug ++ State#.state.pin_gpio),
   <<Orig_Mode:3,Orig_Pin_UpDown_E:1,Orig_Pin_UpDown:1,Orig_Direction:1,Orig_Pin_Slew:1,_Reserved_1:9>> = <<State#state.orig_state:erlang:bit_size(State#state.orig_state)/integer-big>>;
 
-  if length(Ext_Mode) >= 1, length(Ext_Mode) <= 3 ->
-      
-    true -> ;
-            
+  [V_1, V_2, V_3] = ext_mode(Ext_Mode),
+ 
+  if V_1 == 2 -> State#state.pin_updown = binary:bin_to_list(Orig_Pin_UpDown);
+    true -> State#state.pin_updown = V_1
   end,
+
+  if V_2 == 2 -> State#state.pin_updown_e = binary:bin_to_list(Orig_Pin_UpDown_E);
+    true -> State#state.pin_updown_e = V_2
+  end,
+
+  if V_3 == 2 -> State#state.pin_slew = binary:bin_to_list(Orig_Pin_Slew);
+    true -> State#state.pin_slew = V3
+  end,
+
 
   {ok, FdExport} = file:open(GpioExport, [write]),              
   file:write(FdExport, integer_to_list(State#state.pin_gpio)),
@@ -796,19 +813,20 @@ save_current_state(File) ->
   <<Current_State:S/integer-little>>=erlang:list_to_binary(Cur). 
 
 
-ext_mode([Pin_UpDown_E]) ->
-  if Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown_E),"4","4"],"");  
+ext_mode([]) -> ["2","2","2"];
+ext_mode([Pin_UpDown]) ->
+  if Pin_UpDown == 0 ; Pin_UpDown == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),"2","2"],"");  
     true -> {error,"Invalid Ext_Mode Value Pin_UpDown_E"}
   end;
-ext_mode([Pin_UpDown_E,Pin_UpDown]) ->
+ext_mode([Pin_UpDown,Pin_UpDown_E]) ->
   if Pin_UpDown == 0 ; Pin_UpDown == 1,
-     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown_E),erlang:integer_to_list(Pin_UpDown),"4"],"");  
+     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_UpDown_E),"2"],"");  
     true -> {error,"Invalid Ext_Mode Value Pin_UpDown_E or Pin_UpDown"}
   end;
-ext_mode([Pin_UpDown_E,Pin_UpDown,Pin_Slew]) ->
+ext_mode([Pin_UpDown, Pin_UpDown_E,Pin_Slew]) ->
   if Pin_Slew == 0 ; Pin_Slew == 1,
      Pin_UpDown == 0 ; Pin_UpDown == 1,
-     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown_E),erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_Slew)],"");  
+     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_UpDown_E),erlang:integer_to_list(Pin_Slew)],"");  
     true -> {error,"Invalid Ext_Mode Value Pin_Slew or Pin_UpDown or Pin_UpDown_E"}
   end.
 
