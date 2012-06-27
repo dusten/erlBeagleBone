@@ -812,11 +812,14 @@ save_current_state(File) ->
   S = erlang:bit_size(erlang:list_to_binary(Cur)),
   <<Current_State:S/integer-little>>=erlang:list_to_binary(Cur). 
 
+         pin_slew,       % slew rate - [fast|slow] 0=Fast 1=Slow
+                pin_updown,     % Pin is a Pullup or Pulldown - [up|down] 0=pulldown 1=pullup
+                pin_updown_e,   % Pin Pullup/Pulldown is enabled or disabled - [enabled|disabled] 0=enabled 1=disabled
 
 ext_mode([]) -> ["2","2","2"];
 ext_mode([Pin_UpDown]) ->
   if Pin_UpDown == 0 ; Pin_UpDown == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),"2","2"],"");  
-    true -> {error,"Invalid Ext_Mode Value Pin_UpDown_E"}
+    true -> {error,"Invalid Ext_Mode Value Pin_UpDown"}
   end;
 ext_mode([Pin_UpDown,Pin_UpDown_E]) ->
   if Pin_UpDown == 0 ; Pin_UpDown == 1,
@@ -829,6 +832,25 @@ ext_mode([Pin_UpDown, Pin_UpDown_E,Pin_Slew]) ->
      Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_UpDown_E),erlang:integer_to_list(Pin_Slew)],"");  
     true -> {error,"Invalid Ext_Mode Value Pin_Slew or Pin_UpDown or Pin_UpDown_E"}
   end.
+
+
+ext_mode([Pin_UpDown]) ->
+  if Pin_UpDown == 0 ; Pin_UpDown == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),"2","2"],"");  
+    true -> {error,"Invalid Ext_Mode Value Pin_UpDown"}
+  end;
+ext_mode([Pin_UpDown,Pin_UpDown_E]) ->
+  if Pin_UpDown == 0 ; Pin_UpDown == 1,
+     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_UpDown_E),"2"],"");  
+    true -> {error,"Invalid Ext_Mode Value Pin_UpDown_E or Pin_UpDown"}
+  end;
+ext_mode([Pin_UpDown, Pin_UpDown_E,Pin_Slew]) ->
+  if Pin_Slew == 0 ; Pin_Slew == 1,
+     Pin_UpDown == 0 ; Pin_UpDown == 1,
+     Pin_UpDown_E == 0 ; Pin_UpDown_E == 1 -> string:join([erlang:integer_to_list(Pin_UpDown),erlang:integer_to_list(Pin_UpDown_E),erlang:integer_to_list(Pin_Slew)],"");  
+    true -> {error,"Invalid Ext_Mode Value Pin_Slew or Pin_UpDown or Pin_UpDown_E"}
+  end.
+
+
 
 
 %%-------------------------------------------------------------------------
